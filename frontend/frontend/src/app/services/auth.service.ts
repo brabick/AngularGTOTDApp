@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService {
+  accessToken = '';
 
   constructor(private http:HttpClient) {
 
@@ -13,5 +14,13 @@ export class AuthService {
 
   register(body: any) {
     return this.http.post(`${environment.api}/register`, body);
+  }
+
+  login(body: any) {
+    return this.http.post(`${environment.api}/login`, body, {withCredentials: true});
+  }
+
+  user() {
+    return this.http.get(`${environment.api}/user`);
   }
 }
