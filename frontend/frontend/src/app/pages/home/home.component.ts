@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.user().subscribe({
-      next: res => {
-        console.log(res)
+      next: (res: any) => {
+        this.message = `Hello ${res.first_name}`
       },
       error: err => {
         console.log(err)
