@@ -23,4 +23,8 @@ export class AuthService {
   user() {
     return this.http.get(`${environment.api}/user`);
   }
+
+  refresh() {
+    return this.http.post(`${environment.api}/refresh`, {withCredentials: true});
+  }
 }

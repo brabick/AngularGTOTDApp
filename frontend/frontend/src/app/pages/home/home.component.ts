@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
         this.message = `Hello ${res.first_name}`
       },
       error: err => {
-        console.log(err)
+        this.message = 'You are not logged in';
       }
       }
 
