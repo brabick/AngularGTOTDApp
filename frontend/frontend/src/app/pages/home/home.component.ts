@@ -18,9 +18,11 @@ export class HomeComponent implements OnInit {
     this.authService.user().subscribe({
       next: (res: any) => {
         this.message = `Hello ${res.first_name}`
+        AuthService.authEmitter.emit(true);
       },
       error: err => {
         this.message = 'You are not logged in';
+        AuthService.authEmitter.emit(false);
       }
       }
 

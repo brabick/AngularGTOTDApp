@@ -16,22 +16,15 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user().subscribe({
-        next: (res: any) => {
-          this.authenticated = true;
-        },
-        error: err => {
-          this.authenticated = false;
-        }
-      }
-
-    )
-
+    AuthService.authEmitter.subscribe(authenticated => {
+      this.authenticated = authenticated;
+    });
   }
 
   logout() {
     this.authService.logout().subscribe(()=> {
       this.authService.accessToken = '';
+      AuthService.authEmitter.emit(false);
     })
   }
 }
