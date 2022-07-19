@@ -75,7 +75,7 @@ class UserAPIView(APIView):
 class RefreshAPIView(APIView):
     def post(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
-        id= decode_refresh_token(refresh_token)
+        id = decode_refresh_token(refresh_token)
 
         if not UserToken.objects.filter(
             user_id=id,

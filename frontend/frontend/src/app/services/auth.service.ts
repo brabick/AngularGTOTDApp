@@ -25,6 +25,10 @@ export class AuthService {
   }
 
   refresh() {
-    return this.http.post(`${environment.api}/refresh`, {withCredentials: true});
+    return this.http.post(`${environment.api}/refresh`, {}, {withCredentials: true});
+  }
+
+  logout() {
+    return this.http.post(`${environment.api}/logout`, {}, {withCredentials: true});
   }
 }
