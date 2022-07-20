@@ -9,28 +9,10 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  form!: FormGroup;
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private authService: AuthService
-  ) { }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-        email: '',
-        password: '',
-      }
-    )
+  loginData = {
+    id: 0
   }
-  submit(){
-    this.authService.login(this.form.getRawValue()).subscribe(
-      (res: any) => {
-        this.authService.accessToken = res.token;
-        AuthService.authEmitter.emit(true);
-        this.router.navigate(['/'])
-      }
-    );
+
+  ngOnInit() {
   }
 }
