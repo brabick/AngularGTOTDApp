@@ -2,6 +2,7 @@ import datetime
 import random
 import string
 
+import pyotp
 from django.core.mail import send_mail
 from django.shortcuts import render
 from rest_framework.authentication import get_authorization_header
@@ -43,12 +44,46 @@ class LoginAPIView(APIView):
         if not user.check_password(password):
             raise exceptions.AuthenticationFailed('Invalid credentials')
 
+        if user.tfa_secret:
+            return Response({
+                'id': user.id
+            })
 
-        access_token = create_access_token(user.id)
-        refresh_token = create_refresh_token(user.id)
+        secret = pyotp.random_base32()
+        # Displays name of the authenticator app
+        otpauth_url = pyotp.totp.TOTP(secret).provisioning_uri(issuer_name='My App')
+        return Response({
+            'id': user.id,
+            'secret': secret,
+            'otpauth_url': otpauth_url
+        })
+
+
+class TwoFactorAPIView(APIView):
+    def post(self, request):
+        id = request.data['id']
+
+        user = User.objects.filter(pk=id).first()
+
+        if not user:
+            raise exceptions.AuthenticationFailed('Invalid credentials')
+
+        secret = user.tfa_secret if user.tfa_secret !='' else request.data['secret']
+
+        totp = pyotp.TOTP(secret)
+
+        if not pyotp.TOTP(secret).verify(request.data['code']):
+            raise exceptions.AuthenticationFailed('Invalid credentials')
+
+        if user.tfa_secret == '':
+            user.tfa_secret = secret
+            user.save()
+
+        access_token = create_access_token(id)
+        refresh_token = create_refresh_token(id)
 
         UserToken.objects.create(
-            user_id=user.id,
+            user_id=id,
             token=refresh_token,
             expired_at=datetime.datetime.utcnow() + datetime.timedelta(days=7)
         )
@@ -63,7 +98,6 @@ class LoginAPIView(APIView):
         }
 
         return response
-
 
 class UserAPIView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -137,7 +171,7 @@ class ResetAPIView(APIView):
         if not reset_password:
             raise exceptions.APIException('Invalid Link')
 
-        user = User.objects.filer(email=reset_password.email).first()
+        user = User.objects.filter(email=reset_password.email).first()
 
         if not user:
             raise exceptions.APIException('User not found')
