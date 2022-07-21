@@ -14,6 +14,7 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { FormComponent } from './pages/login/form/form.component';
 import { AuthenticatorComponent } from './pages/login/authenticator/authenticator.component';
+import { GtotdComponent } from './pages/gtotd/gtotd.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthenticatorComponent } from './pages/login/authenticator/authenticato
     ForgotComponent,
     ResetComponent,
     FormComponent,
-    AuthenticatorComponent
+    AuthenticatorComponent,
+    GtotdComponent
   ],
   imports: [
     BrowserModule,
