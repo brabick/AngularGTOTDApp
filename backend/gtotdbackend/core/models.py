@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 # Create your models here.
 class User(AbstractUser):
     first_name = models.CharField(max_length=255)
@@ -25,3 +26,22 @@ class Reset(models.Model):
     email = models.CharField(max_length=255)
     token = models.CharField(max_length=255, unique=True)
 
+
+class Gtotd(models.Model):
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    date_created = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class GtotdComment(models.Model):
+    gtotd = models.ForeignKey(Gtotd, related_name='gtotdcomment', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    date_created = models.DateField()
+
+    def __str__(self):
+        return self.body

@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User
+from .models import User, Gtotd
+
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -21,3 +22,10 @@ class UserSerializer(ModelSerializer):
         instance.save()
         # Return without the password
         return instance
+
+
+class GtotdSerializer(ModelSerializer):
+    class Meta:
+        model = Gtotd
+        fields = ['id', 'title', 'body', 'date_created', 'user']
+

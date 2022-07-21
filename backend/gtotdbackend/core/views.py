@@ -13,7 +13,23 @@ from rest_framework import exceptions
 from .authentication import create_access_token, create_refresh_token, decode_access_token, JWTAuthentication, \
     decode_refresh_token
 from .models import User, UserToken, Reset
-from .serializers import UserSerializer
+from .serializers import UserSerializer, GtotdSerializer
+
+
+class GtotdApiView(APIView):
+
+    def post(self, request):
+        data = request.data
+        if not data['title']:
+            return exceptions.APIException('Title cannot be empty')
+        if not data['body']:
+            return exceptions.APIException('Body cannot be empty')
+
+        serializer = GtotdSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
 
 
 class RegisterAPIView(APIView):
