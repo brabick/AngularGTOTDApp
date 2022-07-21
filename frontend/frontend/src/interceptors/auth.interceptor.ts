@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.authService.refresh().pipe(
           switchMap((res: any) => {
             this.authService.accessToken = res.token;
-            console.log(this.authService.accessToken);
+
             return next.handle(request.clone({
               setHeaders: {
                 Authorization: `Bearer ${this.authService.accessToken}`
@@ -38,7 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
         )
       }
       this.refresh = false;
-      return throwError(() => err)
+      return throwError(() => err);
     }));
   }
 }

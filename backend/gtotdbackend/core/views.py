@@ -31,6 +31,7 @@ class RegisterAPIView(APIView):
 
         return Response(serializer.data)
 
+
 class LoginAPIView(APIView):
     def post(self, request):
         email = request.data['email']
@@ -98,6 +99,7 @@ class TwoFactorAPIView(APIView):
         }
 
         return response
+
 
 class UserAPIView(APIView):
     authentication_classes = [JWTAuthentication]
