@@ -15,6 +15,10 @@
       <a routerLink="/forgot">Forgot your password?</a>
     </div>
 
+    <div class="container mt-5 text-center" *ngIf="e">
+      <h3>Invalid Credentials</h3>
+    </div>
+
     <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
   </form>
 </main>

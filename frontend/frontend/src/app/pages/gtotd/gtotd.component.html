@@ -1,1 +1,22 @@
-<p>gtotd works!</p>
+<main class="form-signin">
+  <form [formGroup]="form" (submit)="submit()">
+    <h1 class="h3 mb-3 fw-normal">Please register</h1>
+
+    <div class="form-floating">
+      <input formControlName="title" type="text" class="form-control" placeholder="Title">
+      <label>Title</label>
+    </div>
+
+    <div class="form-floating">
+      <textarea formControlName="last_name" type="text" class="form-control" placeholder="Body"> </textarea>
+      <label>Body</label>
+    </div>
+
+    <div class="form-floating">
+      <input formControlName="date_created" type="date" class="form-control">
+      <label>Date</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+  </form>
+</main>

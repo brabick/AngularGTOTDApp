@@ -25,7 +25,7 @@ export class AuthenticatorComponent implements OnInit {
     this.form = this.formBuilder.group({
         code: '',
       }
-    )
+    );
   }
   submit(){
     const formData = this.form.getRawValue();

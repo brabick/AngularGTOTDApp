@@ -26,13 +26,13 @@ class GtotdApiView(APIView):
             return exceptions.APIException('Body cannot be empty')
 
         user = decode_refresh_token(data['user'])
-        data_new = {
+        """data_new = {
             'title': data['title'],
             'body': data['body'],
             'date_created': data['date_created'],
             'user': user
-        }
-        serializer = GtotdSerializer(data=data_new)
+        }"""
+        serializer = GtotdSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 

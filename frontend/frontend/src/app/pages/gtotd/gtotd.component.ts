@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
+import {GtotdService} from "../../services/gtotd.service";
 
 @Component({
   selector: 'app-gtotd',
@@ -14,22 +15,26 @@ export class GtotdComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private gtotdService: GtotdService,
+
   ) { }
+  user = this.authService.user();
 
   ngOnInit(): void {
+
     this.form = this.formBuilder.group({
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        password_confirm: ''
+        title: '',
+        body: '',
+        user: this.authService.user(),
+        date_created: '',
       }
     )
   }
   submit(){
-    this.authService.register(this.form.getRawValue()).subscribe(
-      () => this.router.navigate(['/login'])
+
+    this.gtotdService.gtotd(this.form.getRawValue()).subscribe(
+      () => this.router.navigate(['/'])
     );
   }
 }

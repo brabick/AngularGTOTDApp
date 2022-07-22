@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
 import * as qrcode from 'qrcode';
 
 @Component({
@@ -20,10 +17,14 @@ export class LoginComponent implements OnInit {
 
   onLogin(data: any) {
     this.loginData = data;
-    if(data.otpauth_url) {
+
+    if (data.otpauth_url) {
       qrcode.toDataURL(data.otpauth_url, (err: any, img: string) => {
-        this.loginData.img = img
+        this.loginData.img = img;
       })
+    }
+    else {
+      console.log('something went wrong above')
     }
   }
 }
