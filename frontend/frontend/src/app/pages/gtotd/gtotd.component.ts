@@ -19,22 +19,71 @@ export class GtotdComponent implements OnInit {
     private gtotdService: GtotdService,
 
   ) { }
-  user = this.authService.user();
+
+  user_id = '';
 
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
         title: '',
         body: '',
-        user: this.authService.user(),
+        user: '',
         date_created: '',
       }
     )
   }
-  submit(){
+  getId(): void {
+    this.authService.user().subscribe({
+      next: (res: any) => {
+        this.form.getRawValue().user = res.id;
+        this.user_id = res.id;
 
+        return res;
+      },
+      error: (err: any) => {
+        this.form.getRawValue().user = err.id;
+        this.user_id = err.id;
+        console.log(this.user_id)
+        return err;
+      }
+    }
+
+    )
+  }
+
+  submit(): void{
+    this.authService.user().subscribe({
+        next: (res: any) => {
+          let new_form = {
+            title: this.form.getRawValue().title,
+            body: this.form.getRawValue().body,
+            user: res.id,
+            date_created: this.form.getRawValue().date_created,
+          }
+          this.gtotdService.gtotd(new_form).subscribe(
+            () => this.router.navigate(['/'])
+          );
+        },
+        error: (err: any) => {
+          this.form.getRawValue().user = err.id;
+          this.user_id = err.id;
+          console.log(this.user_id)
+          return err;
+        }
+      }
+
+    )
+
+  }
+
+  /*submit(){
+    //console.log(this.form);
+    let car = this.getId();
+
+    console.log(this.user_id)
+    console.log(this.form.getRawValue().user)
     this.gtotdService.gtotd(this.form.getRawValue()).subscribe(
       () => this.router.navigate(['/'])
     );
-  }
+  }*/
 }

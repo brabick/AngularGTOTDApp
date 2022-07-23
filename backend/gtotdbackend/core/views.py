@@ -25,7 +25,6 @@ class GtotdApiView(APIView):
         if not data['body']:
             return exceptions.APIException('Body cannot be empty')
 
-        user = decode_refresh_token(data['user'])
         """data_new = {
             'title': data['title'],
             'body': data['body'],
