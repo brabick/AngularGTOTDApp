@@ -18,7 +18,7 @@ export class FormComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  e = false;
+  error = '';
   ngOnInit(): void {
     this.form = this.formBuilder.group({
         email: '',
@@ -27,14 +27,9 @@ export class FormComponent implements OnInit {
     )
   }
   submit(){
-    this.authService.login(this.form.getRawValue()).subscribe({
-        next: (res: any) => {
-          this.onLogin.emit(res)
-        },
-        error: err => {
-          this.e = true;
-        }
-      }
+    this.authService.login(this.form.getRawValue()).subscribe(
+      res => //console.log(res)
+      this.onLogin.emit(res)
     );
   }
 

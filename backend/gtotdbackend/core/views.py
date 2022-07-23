@@ -71,18 +71,28 @@ class LoginAPIView(APIView):
         if not user.check_password(password):
             raise exceptions.AuthenticationFailed('Invalid credentials')
 
-        if user.tfa_secret:
-            return Response({
-                'id': user.id
-            })
-
-        secret = pyotp.random_base32()
+        secret = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))
         # Displays name of the authenticator app
         otpauth_url = pyotp.totp.TOTP(secret).provisioning_uri(issuer_name='My App')
+
+        send_mail(
+            subject='Two Factor Code',
+            message='I hope you are trying to log in... use code %s' % secret,
+            from_email='fram@example.com',
+            recipient_list=[email]
+        )
+        #code = pyotp.TOTP(secret).digest(secret)
+
+        """if user.tfa_secret:
+            return Response({
+                'id': user.id,
+                'otpauth_url': otpauth_url,
+            })"""
+
         return Response({
             'id': user.id,
             'secret': secret,
-            'otpauth_url': otpauth_url
+            'otpauth_url': otpauth_url,
         })
 
 
@@ -97,9 +107,7 @@ class TwoFactorAPIView(APIView):
 
         secret = user.tfa_secret if user.tfa_secret !='' else request.data['secret']
 
-        totp = pyotp.TOTP(secret)
-
-        if not pyotp.TOTP(secret).verify(request.data['code']):
+        if not user.tfa_secret:
             raise exceptions.AuthenticationFailed('Invalid credentials')
 
         if user.tfa_secret == '':
@@ -115,15 +123,11 @@ class TwoFactorAPIView(APIView):
             expired_at=datetime.datetime.utcnow() + datetime.timedelta(days=7)
         )
 
-        serializer = UserSerializer(user)
-
         response = Response()
         response.set_cookie(key='refresh_token', value=refresh_token, httponly=True)
-
         response.data = {
             'token': access_token
         }
-
         return response
 
 
@@ -140,9 +144,9 @@ class RefreshAPIView(APIView):
         id = decode_refresh_token(refresh_token)
 
         if not UserToken.objects.filter(
-            user_id=id,
-            token=refresh_token,
-            expired_at__gt=datetime.datetime.now(tz=datetime.timezone.utc)
+                user_id=id,
+                token=refresh_token,
+                expired_at__gt=datetime.datetime.now(tz=datetime.timezone.utc)
         ).exists():
             raise exceptions.AuthenticationFailed('Unauthenticated')
         access_token = create_access_token(id)
@@ -184,7 +188,7 @@ class ForgotAPIView(APIView):
         )
 
         return Response({
-            'message':'success'
+            'message': 'success'
         })
 
 

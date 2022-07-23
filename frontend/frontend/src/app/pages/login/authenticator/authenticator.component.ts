@@ -31,6 +31,9 @@ export class AuthenticatorComponent implements OnInit {
     const formData = this.form.getRawValue();
     const data = this.loginData;
 
+    console.log("data " + data);
+    console.log(formData)
+
     this.authService.authenticatorLogin({
       ...data,
       ...formData
