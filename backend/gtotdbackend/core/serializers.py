@@ -25,6 +25,7 @@ class UserSerializer(ModelSerializer):
 
 
 class GtotdSerializer(ModelSerializer):
+
     class Meta:
         model = Gtotd
         fields = ['id', 'title', 'body', 'date_created', 'user']

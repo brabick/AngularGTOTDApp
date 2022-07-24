@@ -21,6 +21,8 @@ export class GtotdComponent implements OnInit {
   ) { }
 
   user_id = '';
+  show_message = false;
+  message = '';
 
   ngOnInit(): void {
 
@@ -60,14 +62,17 @@ export class GtotdComponent implements OnInit {
             user: res.id,
             date_created: this.form.getRawValue().date_created,
           }
+          this.message = "Nice!"
+          this.show_message = true;
           this.gtotdService.gtotd(new_form).subscribe(
             () => this.router.navigate(['/'])
           );
         },
         error: (err: any) => {
+          this.message = "Hold on there buddy! Are you logged in?"
+          this.show_message = true;
           this.form.getRawValue().user = err.id;
           this.user_id = err.id;
-          console.log(this.user_id)
           return err;
         }
       }
