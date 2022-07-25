@@ -17,10 +17,10 @@ interface Gtotd {
 })
 export class HomeComponent implements OnInit {
   message = '';
-  gtotds = {};
+  gtotds: Gtotd[] = [];
   constructor(
     private authService: AuthService,
-    private gtotdService: GtotdService
+    private gtotdService: GtotdService,
   ) {
 
   }
@@ -48,10 +48,13 @@ export class HomeComponent implements OnInit {
   }
 
   getGtotds() {
+
+    const result : string[] = []
     this.gtotdService.allGtotds().subscribe({
       next: (res:any) => {
         for(let i = 0; i < res.length; i++) {
           console.log(res[i])
+          this.gtotds.push(res[i])
         }
         this.gtotds = res;
     }
