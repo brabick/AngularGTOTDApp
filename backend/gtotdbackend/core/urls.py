@@ -1,6 +1,6 @@
 from django.urls import path, include, re_path
 from .views import RegisterAPIView, LoginAPIView, UserAPIView, RefreshAPIView, LogoutAPIView, \
-    ForgotAPIView, ResetAPIView, TwoFactorAPIView, GtotdApiView
+    ForgotAPIView, ResetAPIView, TwoFactorAPIView, GtotdApiView, MultipleGtotdAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -13,5 +13,7 @@ urlpatterns = [
     path('reset', ResetAPIView.as_view()),
     path('gtotd', GtotdApiView.as_view()),
     path('gtotd/', GtotdApiView.as_view()),
-    re_path('^gtotd/(?P<id>.+)/$', GtotdApiView.as_view())
+    re_path('^gtotd/(?P<id>.+)/$', GtotdApiView.as_view()),
+    path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
+
 ]

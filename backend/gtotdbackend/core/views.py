@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import exceptions, generics
+from rest_framework import exceptions, generics, viewsets
 
 from .authentication import create_access_token, create_refresh_token, decode_access_token, JWTAuthentication, \
     decode_refresh_token
@@ -46,7 +46,20 @@ class GtotdApiView(APIView):
             serializer = GtotdSerializer(gtotd)
             return Response(serializer.data)
 
-        raise exceptions.APIException('ID not found')
+        raise exceptions.APIException('GTOTD not found')
+
+
+class MultipleGtotdAPIView(viewsets.ModelViewSet):
+    model = Gtotd
+    serializer_class = GtotdSerializer
+
+    def get_queryset(self):
+        return Gtotd.objects.all()
+
+    def get(self, request):
+
+        queryset = self.get_queryset()
+        return Response(queryset)
 
 
 class RegisterAPIView(APIView):

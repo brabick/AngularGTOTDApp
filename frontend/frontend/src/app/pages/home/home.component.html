@@ -1,3 +1,12 @@
 <div class="container mt-5 text-center">
   <h3>{{message}}</h3>
 </div>
+
+<div>
+  <ul>
+    <li *ngFor="let gtotd of gtotds">
+      {{gtotd.id}}
+    </li>
+  </ul>
+
+</div>

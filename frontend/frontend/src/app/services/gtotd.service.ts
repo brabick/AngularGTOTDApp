@@ -15,6 +15,10 @@ export class GtotdService {
     return this.http.post(`${environment.api}/gtotd`, body);
   }
 
+  allGtotds() {
+    return this.http.get(`${environment.api}/gtotds`);
+  }
+
   reset(body: any) {
     return this.http.post(`${environment.api}/reset`, body);
   }
