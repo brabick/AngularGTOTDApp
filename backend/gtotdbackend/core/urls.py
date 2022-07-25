@@ -15,5 +15,4 @@ urlpatterns = [
     path('gtotd/', GtotdApiView.as_view()),
     re_path('^gtotd/(?P<id>.+)/$', GtotdApiView.as_view()),
     path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
-
 ]

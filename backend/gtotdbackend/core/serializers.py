@@ -1,5 +1,4 @@
 from rest_framework.fields import ReadOnlyField
-from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField, RelatedField
 from rest_framework.serializers import ModelSerializer
 from .models import User, Gtotd
 
