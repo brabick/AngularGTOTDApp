@@ -1,3 +1,5 @@
+from rest_framework.fields import ReadOnlyField
+from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField, RelatedField
 from rest_framework.serializers import ModelSerializer
 from .models import User, Gtotd
 
@@ -26,6 +28,7 @@ class UserSerializer(ModelSerializer):
 
 class GtotdSerializer(ModelSerializer):
 
+    user = ReadOnlyField(source='user.first_name', read_only=True)
     class Meta:
         model = Gtotd
         fields = ['id', 'title', 'body', 'date_created', 'user']

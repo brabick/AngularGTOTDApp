@@ -5,7 +5,12 @@
 <div>
   <ul>
     <li *ngFor="let gtotd of gtotds">
-      {{gtotd.id}}
+      <h5>What Happened?</h5>
+      <h3>{{gtotd.title}}</h3>
+      <h5>Give me more details!</h5>
+      <p>{{gtotd.body}}</p>
+      <h5>Who said it???</h5>
+      <p>{{gtotd.user}}</p>
     </li>
   </ul>
 </div>
