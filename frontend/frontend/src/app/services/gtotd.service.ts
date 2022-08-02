@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class GtotdService {
+  static gtotdEmitter = new EventEmitter<number>();
 
   constructor(private http:HttpClient) {
 

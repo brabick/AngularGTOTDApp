@@ -52,4 +52,8 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  onClickGtotd() {
+    GtotdService.gtotdEmitter.emit()
+  }
+
 }
