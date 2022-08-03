@@ -21,7 +21,7 @@ export class GtotdService {
   }
 
   singleGtotd(body: any) {
-    return this.http.get(`${environment.api}/gtotds/?id=${body}`);
+    return this.http.get(`${environment.api}/gtotd/?id=${body}`);
   }
 
   reset(body: any) {

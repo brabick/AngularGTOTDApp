@@ -81,14 +81,4 @@ export class GtotdComponent implements OnInit {
 
   }
 
-  /*submit(){
-    //console.log(this.form);
-    let car = this.getId();
-
-    console.log(this.user_id)
-    console.log(this.form.getRawValue().user)
-    this.gtotdService.gtotd(this.form.getRawValue()).subscribe(
-      () => this.router.navigate(['/'])
-    );
-  }*/
 }

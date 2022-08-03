@@ -1,1 +1,23 @@
-<p>gtotds works!</p>
+<div class="container d-flex p-2" *ngIf="response">
+  <ul class="gtotds">
+    <li *ngFor="let gtotd of gtotds">
+      <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">What Happened?</h5>
+          <h3>{{gtotd.title}}</h3>
+          <hr />
+          <h5>Give me more details!</h5>
+          <p>{{gtotd.body}}</p>
+          <p>By: {{gtotd.user}}</p>
+          <p>On: {{gtotd.date_created}}</p>
+          <a routerLink="/gtotd/{{gtotd.id}}" class="btn btn-primary">Comment</a>
+        </div>
+        <br />
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="container d-flex p-2" *ngIf="!response">
+  <p>Nothing to see here, move along.</p>
+</div>

@@ -6,6 +6,7 @@ import {RegisterComponent} from "./pages/register/register.component";
 import {ForgotComponent} from "./pages/forgot/forgot.component";
 import {ResetComponent} from "./pages/reset/reset.component";
 import {GtotdComponent} from "./pages/gtotd/gtotd.component";
+import {GtotdsComponent} from "./pages/gtotd/gtotds/gtotds.component";
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'forgot', component: ForgotComponent},
   {path: 'reset/:token', component: ResetComponent},
-  {path: 'gtotd', component: GtotdComponent}
+  {path: 'gtotd', component: GtotdComponent},
+  {path: 'gtotd/:id', component: GtotdsComponent},
 ];
 
 @NgModule({
