@@ -77,8 +77,7 @@ class GetGtotdCommentApiView(APIView):
                 serializer = GtotdCommentSerializer(i)
                 results.append(serializer.data)
 
-            print("fuck", results)
-            return Response({'results': results})
+            return Response(results)
 
         raise exceptions.APIException('GTOTD not found')
 
