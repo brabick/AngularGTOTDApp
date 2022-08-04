@@ -38,7 +38,7 @@ class Gtotd(models.Model):
 
 
 class GtotdComment(models.Model):
-    gtotd = models.ForeignKey(Gtotd, related_name='gtotdcomment', on_delete=models.CASCADE)
+    gtotd = models.ForeignKey(Gtotd, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     date_created = models.DateField()

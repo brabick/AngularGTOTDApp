@@ -11,8 +11,8 @@ from rest_framework import exceptions, generics, viewsets
 
 from .authentication import create_access_token, create_refresh_token, decode_access_token, JWTAuthentication, \
     decode_refresh_token
-from .models import User, UserToken, Reset, Gtotd
-from .serializers import UserSerializer, GtotdSerializer
+from .models import User, UserToken, Reset, Gtotd, GtotdComment
+from .serializers import UserSerializer, GtotdSerializer, GtotdCommentSerializer
 
 
 class GtotdApiView(APIView):
@@ -49,6 +49,40 @@ class GtotdApiView(APIView):
         raise exceptions.APIException('GTOTD not found')
 
 
+class GetGtotdCommentApiView(APIView):
+
+    serializer_class = GtotdCommentSerializer
+
+    def post(self, request):
+        data = request.data
+
+        if not data['body']:
+            return exceptions.APIException('Body cannot be empty')
+
+        serializer = GtotdCommentSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    def get(self, gtotd):
+        queryset = GtotdComment.objects.all()
+        print(queryset, gtotd)
+        gtotd = self.request.query_params.get('id', None)
+
+        results = []
+        if gtotd is not None:
+            good = queryset.filter(gtotd=gtotd)
+            for i in good:
+                serializer = GtotdCommentSerializer(i)
+                results.append(serializer.data)
+
+            print("fuck", results)
+            return Response({'results': results})
+
+        raise exceptions.APIException('GTOTD not found')
+
+
 class MultipleGtotdAPIView(viewsets.ModelViewSet):
     model = Gtotd
     serializer_class = GtotdSerializer
@@ -57,7 +91,6 @@ class MultipleGtotdAPIView(viewsets.ModelViewSet):
         return Gtotd.objects.all()
 
     def get(self, request):
-
         queryset = self.get_queryset()
         return Response(queryset)
 
