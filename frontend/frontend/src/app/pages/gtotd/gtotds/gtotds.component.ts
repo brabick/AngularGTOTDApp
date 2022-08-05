@@ -13,6 +13,14 @@ interface Gtotd {
   user: Number;
 }
 
+interface Comment {
+  id: Number;
+  body: string;
+  date_created: string;
+  user: string;
+  gtotd: Number;
+}
+
 @Component({
   selector: 'app-gtotds',
   templateUrl: './gtotds.component.html',
@@ -22,7 +30,9 @@ export class GtotdsComponent implements OnInit {
   form!: FormGroup;
 
   gtotds: Gtotd[] = [];
+  comments: Comment[] = [];
   response = false;
+  comment = false;
   constructor(
     private formBuilder: FormBuilder,
     private forgotService: ForgotService,
@@ -55,10 +65,30 @@ export class GtotdsComponent implements OnInit {
       next: (res: any) => {
         this.gtotds.push(res);
         this.response = true;
+        console.log(this.gtotds);
+        this.getComments()
         return res;
+
       },
       error: (err: any) => {
 
+        console.log("error")
+        return err;
+      }
+    })
+  }
+
+  getComments(): void {
+    this.gtotdService.gtotdComments(this.route.snapshot.params['id']).subscribe({
+      next: (res: any) => {
+        for(let i = 0; i < res.length; i++) {
+          this.comments.push(res[i])
+        }
+        this.comment = true;
+        console.log(this.comments);
+        return res;
+      },
+      error: (err: any) => {
         console.log("error")
         return err;
       }

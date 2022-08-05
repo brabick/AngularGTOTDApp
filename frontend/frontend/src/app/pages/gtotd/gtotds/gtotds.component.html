@@ -12,6 +12,25 @@
           <p>On: {{gtotd.date_created}}</p>
           <a routerLink="/gtotd/{{gtotd.id}}" class="btn btn-primary">Comment</a>
         </div>
+
+        <br />
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="comment">
+  <ul>
+    <li *ngFor="let com of comments">
+      <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <hr />
+          <h5>Give me more details!</h5>
+          <p>{{com.body}}</p>
+          <p>By: {{com.user}}</p>
+          <p>On: {{com.date_created}}</p>
+        </div>
+
         <br />
       </div>
     </li>

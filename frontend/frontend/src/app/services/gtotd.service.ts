@@ -24,6 +24,10 @@ export class GtotdService {
     return this.http.get(`${environment.api}/gtotd/?id=${body}`);
   }
 
+  gtotdComments(body: any) {
+    return this.http.get(`${environment.api}/comments?id=${body}`);
+  }
+
   reset(body: any) {
     return this.http.post(`${environment.api}/reset`, body);
   }
