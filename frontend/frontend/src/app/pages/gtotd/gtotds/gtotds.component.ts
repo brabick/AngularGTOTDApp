@@ -3,8 +3,11 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {ForgotService} from "../../../services/forgot.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GtotdService} from "../../../services/gtotd.service";
+import {AuthService} from "../../../services/auth.service";
 
 
+
+// The naming sucks, this is the component for the single Gtotd
 interface Gtotd {
   id: Number;
   title: string;
@@ -33,15 +36,21 @@ export class GtotdsComponent implements OnInit {
   comments: Comment[] = [];
   response = false;
   comment = false;
+  authenticated = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private forgotService: ForgotService,
     private route: ActivatedRoute,
     private router: Router,
-    private gtotdService: GtotdService
+    private gtotdService: GtotdService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    AuthService.authEmitter.subscribe(authenticated => {
+      this.authenticated = authenticated;
+    });
     this.form = this.formBuilder.group({
         password: '',
         password_confirm: '',
@@ -55,7 +64,7 @@ export class GtotdsComponent implements OnInit {
 
     const data = {
       ...formData,
-      token: this.route.snapshot.params['id']
+
     }
     this.forgotService.reset(data).subscribe(() => this.router.navigate(['/login']));
   }
@@ -93,6 +102,10 @@ export class GtotdsComponent implements OnInit {
         return err;
       }
     })
+  }
+
+  submitComment() {
+
   }
 
 

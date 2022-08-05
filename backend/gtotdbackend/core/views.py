@@ -158,9 +158,7 @@ class TwoFactorAPIView(APIView):
             raise exceptions.AuthenticationFailed('Invalid credentials')
 
         secret = user.tfa_secret if user.tfa_secret !='' else request.data['secret']
-
-        if not user.tfa_secret:
-            raise exceptions.AuthenticationFailed('Invalid credentials')
+        
 
         if user.tfa_secret == '':
             user.tfa_secret = secret
@@ -194,12 +192,13 @@ class RefreshAPIView(APIView):
     def post(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
         id = decode_refresh_token(refresh_token)
-
+        print("id", id, refresh_token, datetime.datetime.now(tz=datetime.timezone.utc))
         if not UserToken.objects.filter(
                 user_id=id,
                 token=refresh_token,
                 expired_at__gt=datetime.datetime.now(tz=datetime.timezone.utc)
         ).exists():
+
             raise exceptions.AuthenticationFailed('Unauthenticated')
         access_token = create_access_token(id)
 

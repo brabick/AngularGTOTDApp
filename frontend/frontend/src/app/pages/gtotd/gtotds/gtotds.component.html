@@ -19,24 +19,29 @@
   </ul>
 </div>
 
-<div *ngIf="comment">
-  <ul>
+<div class="container d-flex p-2" *ngIf="comment">
+  <ul class="comments" >
     <li *ngFor="let com of comments">
-      <div class="card mb-3" style="width: 18rem;">
+      <div class="card" style="width: 18rem;">
         <div class="card-body">
-          <hr />
-          <h5>Give me more details!</h5>
+          <h5>{{com.user}} Says...</h5>
           <p>{{com.body}}</p>
-          <p>By: {{com.user}}</p>
           <p>On: {{com.date_created}}</p>
         </div>
-
-        <br />
       </div>
     </li>
   </ul>
 </div>
 
+<div class="container d-flex p-2" *ngIf="authenticated">
+  <p>auth</p>
+</div>
+
+
 <div class="container d-flex p-2" *ngIf="!response">
   <p>Nothing to see here, move along.</p>
+</div>
+
+<div class="container d-flex p-2" *ngIf="!comment">
+  <p>There are no comments. Why not be the first?</p>
 </div>

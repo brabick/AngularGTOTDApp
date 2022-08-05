@@ -31,4 +31,7 @@ export class GtotdService {
   reset(body: any) {
     return this.http.post(`${environment.api}/reset`, body);
   }
+  postGtotdComment(body: any) {
+    return this.http.post(`${environment.api}/comments`, body);
+  }
 }
