@@ -16,6 +16,7 @@ import { FormComponent } from './pages/login/form/form.component';
 import { AuthenticatorComponent } from './pages/login/authenticator/authenticator.component';
 import { GtotdComponent } from './pages/gtotd/gtotd.component';
 import { GtotdsComponent } from './pages/gtotd/gtotds/gtotds.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GtotdsComponent } from './pages/gtotd/gtotds/gtotds.component';
     FormComponent,
     AuthenticatorComponent,
     GtotdComponent,
-    GtotdsComponent
+    GtotdsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { GtotdsComponent } from './pages/gtotd/gtotds/gtotds.component';
     HttpClientModule
   ],
   providers: [
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

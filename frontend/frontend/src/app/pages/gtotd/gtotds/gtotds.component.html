@@ -12,9 +12,18 @@
           <p>On: {{gtotd.date_created}}</p>
           <a routerLink="/gtotd/{{gtotd.id}}" class="btn btn-primary">Comment</a>
         </div>
-
         <br />
       </div>
+      <form [formGroup]="form" (submit)="submit()" *ngIf="authenticated">
+        <h1 class="h3 mb-3 fw-normal">New Comment</h1>
+
+        <div class="form-floating">
+          <textarea formControlName="body" type="text" class="form-control" placeholder="Body"> </textarea>
+          <label>Body</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+      </form>
     </li>
   </ul>
 </div>
@@ -31,10 +40,6 @@
       </div>
     </li>
   </ul>
-</div>
-
-<div class="container d-flex p-2" *ngIf="authenticated">
-  <p>auth</p>
 </div>
 
 

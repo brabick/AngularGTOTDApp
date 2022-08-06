@@ -12,7 +12,6 @@ import {ForgotService} from "../../services/forgot.service";
 export class ResetComponent implements OnInit {
   form!: FormGroup;
 
-
   constructor(
     private formBuilder: FormBuilder,
     private forgotService: ForgotService,

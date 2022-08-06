@@ -4,7 +4,7 @@ import {ForgotService} from "../../../services/forgot.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GtotdService} from "../../../services/gtotd.service";
 import {AuthService} from "../../../services/auth.service";
-
+import { DatePipe } from '@angular/common';
 
 
 // The naming sucks, this is the component for the single Gtotd
@@ -31,12 +31,16 @@ interface Comment {
 })
 export class GtotdsComponent implements OnInit {
   form!: FormGroup;
+  date = new Date();
 
   gtotds: Gtotd[] = [];
   comments: Comment[] = [];
   response = false;
   comment = false;
   authenticated = false;
+  user_id = '';
+  message = '';
+  show_message = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,28 +49,59 @@ export class GtotdsComponent implements OnInit {
     private router: Router,
     private gtotdService: GtotdService,
     private authService: AuthService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
+
+    this.authService.user().subscribe({
+      next: (res: any) => {
+        if(res.id){
+          this.authenticated = true;
+          this.user_id = res.id;
+          console.log(this.user_id);
+          console.log(this.authenticated)
+        }
+
+      },
+    })
+
     AuthService.authEmitter.subscribe(authenticated => {
-      this.authenticated = authenticated;
+      this.authenticated = true;
     });
+    console.log('authenticated' + this.authenticated)
     this.form = this.formBuilder.group({
-        password: '',
-        password_confirm: '',
+      body: '',
+      date_created: '',
+      user: '',
+      id: '',
       }
     )
     this.getGtotd();
   }
 
   submit(){
-    const formData = this.form.getRawValue();
+     this.authService.user().subscribe({
+      next: (res: any) => {
+        let new_form = {
+          gtotd: this.route.snapshot.params['id'],
+          body: this.form.getRawValue().body,
+          user: res.id,
+          date_created: this.datePipe.transform(this.date, 'yyyy-MM-dd'),
+        }
 
-    const data = {
-      ...formData,
-
-    }
-    this.forgotService.reset(data).subscribe(() => this.router.navigate(['/login']));
+        this.gtotdService.postGtotdComment(new_form).subscribe(
+          () => this.router.navigate(['/'])
+        );
+      },
+      error: (err: any) => {
+        this.message = "Hold on there buddy! Are you logged in?"
+        this.show_message = true;
+        this.form.getRawValue().user = err.id;
+        this.user_id = err.id;
+        return err;
+      }
+    })
   }
 
   getGtotd(): void {
@@ -103,10 +138,5 @@ export class GtotdsComponent implements OnInit {
       }
     })
   }
-
-  submitComment() {
-
-  }
-
 
 }

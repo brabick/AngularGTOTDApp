@@ -12,7 +12,8 @@ from rest_framework import exceptions, generics, viewsets
 from .authentication import create_access_token, create_refresh_token, decode_access_token, JWTAuthentication, \
     decode_refresh_token
 from .models import User, UserToken, Reset, Gtotd, GtotdComment
-from .serializers import UserSerializer, GtotdSerializer, GtotdCommentSerializer
+from .serializers import UserSerializer, GtotdSerializer, GtotdCommentSerializer, GtotdGetterCommentSerializer, \
+    GtotdGetterSerializer
 
 
 class GtotdApiView(APIView):
@@ -43,7 +44,7 @@ class GtotdApiView(APIView):
 
         if id is not None:
             gtotd = queryset.get(id=id)
-            serializer = GtotdSerializer(gtotd)
+            serializer = GtotdGetterSerializer(gtotd)
             return Response(serializer.data)
 
         raise exceptions.APIException('GTOTD not found')
@@ -74,7 +75,7 @@ class GetGtotdCommentApiView(APIView):
         if gtotd is not None:
             good = queryset.filter(gtotd=gtotd)
             for i in good:
-                serializer = GtotdCommentSerializer(i)
+                serializer = GtotdGetterCommentSerializer(i)
                 results.append(serializer.data)
 
             return Response(results)
@@ -84,7 +85,7 @@ class GetGtotdCommentApiView(APIView):
 
 class MultipleGtotdAPIView(viewsets.ModelViewSet):
     model = Gtotd
-    serializer_class = GtotdSerializer
+    serializer_class = GtotdGetterSerializer
 
     def get_queryset(self):
         return Gtotd.objects.all()
@@ -158,7 +159,6 @@ class TwoFactorAPIView(APIView):
             raise exceptions.AuthenticationFailed('Invalid credentials')
 
         secret = user.tfa_secret if user.tfa_secret !='' else request.data['secret']
-        
 
         if user.tfa_secret == '':
             user.tfa_secret = secret
