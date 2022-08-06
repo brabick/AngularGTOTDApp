@@ -188,6 +188,27 @@ class UserAPIView(APIView):
         return Response(UserSerializer(request.user).data)
 
 
+class MultipleUserAPIView(APIView):
+    model = User
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        queryset = User.objects.all()
+
+        user = self.request.query_params.get('u', None)
+        results = []
+        if user is not None:
+            good = queryset.filter(first_name__icontains=user)
+            for i in good:
+                print(i)
+                serializer = UserSerializer(i)
+                results.append(serializer.data)
+
+            return Response(results)
+
+        raise exceptions.APIException('No users found')
+
+
 class RefreshAPIView(APIView):
     def post(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
