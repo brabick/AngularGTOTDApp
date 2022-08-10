@@ -59,17 +59,11 @@ export class GtotdsComponent implements OnInit {
         if(res.id){
           this.authenticated = true;
           this.user_id = res.id;
-          console.log(this.user_id);
-          console.log(this.authenticated)
+
         }
 
       },
     })
-
-    AuthService.authEmitter.subscribe(authenticated => {
-      this.authenticated = true;
-    });
-    console.log('authenticated' + this.authenticated)
     this.form = this.formBuilder.group({
       body: '',
       date_created: '',

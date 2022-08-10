@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-nav',
@@ -8,9 +9,11 @@ import {AuthService} from "../../services/auth.service";
 })
 export class NavComponent implements OnInit {
   authenticated = false;
+  form!: FormGroup;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
   ) {
 
   }
@@ -19,6 +22,11 @@ export class NavComponent implements OnInit {
     AuthService.authEmitter.subscribe(authenticated => {
       this.authenticated = authenticated;
     });
+    this.form = this.formBuilder.group({
+        search: '',
+
+      }
+    )
   }
 
   logout() {

@@ -188,21 +188,32 @@ class UserAPIView(APIView):
         return Response(UserSerializer(request.user).data)
 
 
-class MultipleUserAPIView(APIView):
-    model = User
-    serializer_class = UserSerializer
+class MultipleUserCommentAPIView(APIView):
+    model = Gtotd
+    serializer_class = GtotdGetterSerializer
 
     def get(self, request):
-        queryset = User.objects.all()
+        queryset = Gtotd.objects.all()
 
         user = self.request.query_params.get('u', None)
         results = []
         if user is not None:
-            good = queryset.filter(first_name__icontains=user)
-            for i in good:
-                print(i)
-                serializer = UserSerializer(i)
-                results.append(serializer.data)
+            body_search = queryset.filter(body__icontains=user)
+            print(body_search)
+            if body_search is not None:
+                for i in body_search:
+                    print(i)
+                    serializer = GtotdGetterSerializer(i)
+                    results.append(serializer.data)
+
+            title_search = queryset.filter(title__icontains=user)
+            print(title_search)
+            if title_search is not None:
+                for i in title_search:
+                    if i not in results:
+                        print(i)
+                        serializer = UserSerializer(i)
+                        results.append(serializer.data)
 
             return Response(results)
 
