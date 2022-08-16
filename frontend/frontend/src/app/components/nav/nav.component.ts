@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {GtotdService} from "../../services/gtotd.service";
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +15,7 @@ export class NavComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private gtotdService: GtotdService,
   ) {
 
   }
@@ -24,7 +26,6 @@ export class NavComponent implements OnInit {
     });
     this.form = this.formBuilder.group({
         search: '',
-
       }
     )
   }
@@ -33,6 +34,24 @@ export class NavComponent implements OnInit {
     this.authService.logout().subscribe(()=> {
       this.authService.accessToken = '';
       AuthService.authEmitter.emit(false);
+    })
+  }
+
+  submit(): void {
+    this.gtotdService.searchGtotd(this.form.getRawValue().search).subscribe({
+      next: (res: any) => {
+        /*for(let i = 0; i < res.length; i++) {
+          this.comments.push(res[i])
+        }
+        this.comment = true;
+        console.log(this.comments);
+        return res;*/
+        console.log(res);
+      },
+      error: (err: any) => {
+        console.log("error")
+        return err;
+      }
     })
   }
 }

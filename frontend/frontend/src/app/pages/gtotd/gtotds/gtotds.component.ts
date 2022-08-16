@@ -6,7 +6,6 @@ import {GtotdService} from "../../../services/gtotd.service";
 import {AuthService} from "../../../services/auth.service";
 import { DatePipe } from '@angular/common';
 
-
 // The naming sucks, this is the component for the single Gtotd
 interface Gtotd {
   id: Number;

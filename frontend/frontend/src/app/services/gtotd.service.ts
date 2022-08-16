@@ -34,4 +34,7 @@ export class GtotdService {
   postGtotdComment(body: any) {
     return this.http.post(`${environment.api}/comments`, body);
   }
+  searchGtotd(body: any) {
+    return this.http.get(`${environment.api}/searchgtotd?u=${body}`);
+  }
 }

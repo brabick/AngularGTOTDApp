@@ -19,7 +19,7 @@ urlpatterns = [
     path('comments/<int:id>/', GetGtotdCommentApiView.as_view()),
     # don't forget that if you're adding a url with a parameter
     # you need a base url as well
-    path('users', MultipleUserCommentAPIView.as_view()),
-    path('users/<str:u>/', MultipleUserCommentAPIView.as_view()),
+    path('searchgtotd', MultipleUserCommentAPIView.as_view()),
+    path('searchgtotd/<str:u>/', MultipleUserCommentAPIView.as_view()),
     path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
 ]
