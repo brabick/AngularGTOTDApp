@@ -14,6 +14,7 @@ from .authentication import create_access_token, create_refresh_token, decode_ac
 from .models import User, UserToken, Reset, Gtotd, GtotdComment
 from .serializers import UserSerializer, GtotdSerializer, GtotdCommentSerializer, GtotdGetterCommentSerializer, \
     GtotdGetterSerializer
+from django.db.models import Q
 
 
 class GtotdApiView(APIView):
@@ -198,6 +199,17 @@ class MultipleUserCommentAPIView(APIView):
         user = self.request.query_params.get('u', None)
         results = []
         if user is not None:
+            body_search = queryset.filter(
+                Q(body__icontains=user) | Q(title__icontains=user) | Q(user__first_name__icontains=user))
+            print(body_search)
+            if body_search is not None:
+                for i in body_search:
+                    print(i)
+                    serializer = GtotdGetterSerializer(i)
+                    results.append(serializer.data)
+
+            """
+                    if user is not None:
             body_search = queryset.filter(body__icontains=user)
             print(body_search)
             if body_search is not None:
@@ -213,7 +225,7 @@ class MultipleUserCommentAPIView(APIView):
                     if i not in results:
                         print(i)
                         serializer = UserSerializer(i)
-                        results.append(serializer.data)
+                        results.append(serializer.data)"""
 
             return Response(results)
 

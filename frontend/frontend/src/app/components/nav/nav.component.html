@@ -3,15 +3,13 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a routerLink="/" class="nav-link px-2 text-white">Home</a></li>
+
+          <form [formGroup]="form" (submit)="submit()" class="d-flex">
+            <li><input formControlName="search" type="text" class="form-control" placeholder="Find Users"></li>
+            <li><button class="btn btn-warning" type="submit">Search</button></li>
+          </form>
+
       </ul>
-      <form [formGroup]="form" (submit)="submit()">
-
-        <div class="form-floating">
-          <textarea formControlName="search" type="text" class="form-control" placeholder="Find Users"> </textarea>
-        </div>
-
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Search</button>
-      </form>
 
       <div class="text-end" *ngIf="authenticated">
         <a routerLink="/gtotd" class="btn btn-warning">GTOTD</a>
