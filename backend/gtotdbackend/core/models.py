@@ -9,6 +9,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     username = None
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics', null=True, blank=True)
     tfa_secret = models.CharField(max_length=255, default='')
 
     USERNAME_FIELD = 'email'

@@ -189,7 +189,7 @@ class UserAPIView(APIView):
         return Response(UserSerializer(request.user).data)
 
 
-class MultipleUserCommentAPIView(APIView):
+class SearchGtotdAPIView(APIView):
     model = Gtotd
     serializer_class = GtotdGetterSerializer
 

@@ -18,6 +18,7 @@ interface Gtotd {
 export class HomeComponent implements OnInit {
   message = '';
   gtotds: Gtotd[] = [];
+  image = '';
   constructor(
     private authService: AuthService,
     private gtotdService: GtotdService,
@@ -29,8 +30,10 @@ export class HomeComponent implements OnInit {
     this.getGtotds();
     this.authService.user().subscribe({
       next: (res: any) => {
-        this.message = `Hello ${res.first_name}`
+        this.message = `Hello ${res.first_name}`;
+        this.image = res.image;
         AuthService.authEmitter.emit(true);
+        console.log(res);
       },
       error: err => {
         this.message = 'You are not logged in';

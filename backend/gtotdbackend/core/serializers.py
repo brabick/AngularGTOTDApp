@@ -6,7 +6,7 @@ from .models import User, Gtotd, GtotdComment
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'password']
+        fields = ['id', 'first_name', 'last_name', 'email', 'password', 'image']
         extra_kwargs = {
             'password':
                 {'write_only': True}

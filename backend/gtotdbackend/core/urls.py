@@ -1,7 +1,9 @@
 from django.urls import path, include, re_path
 from .views import RegisterAPIView, LoginAPIView, UserAPIView, RefreshAPIView, LogoutAPIView, \
     ForgotAPIView, ResetAPIView, TwoFactorAPIView, GtotdApiView, GetGtotdCommentApiView, MultipleGtotdAPIView, \
-    MultipleUserCommentAPIView
+    SearchGtotdAPIView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -19,7 +21,10 @@ urlpatterns = [
     path('comments/<int:id>/', GetGtotdCommentApiView.as_view()),
     # don't forget that if you're adding a url with a parameter
     # you need a base url as well
-    path('searchgtotd', MultipleUserCommentAPIView.as_view()),
-    path('searchgtotd/<str:u>/', MultipleUserCommentAPIView.as_view()),
+    path('searchgtotd', SearchGtotdAPIView.as_view()),
+    path('searchgtotd/<str:u>/', SearchGtotdAPIView.as_view()),
     path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
 ]
+
+if settings.DEBUG:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
