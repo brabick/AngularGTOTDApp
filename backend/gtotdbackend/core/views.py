@@ -11,9 +11,9 @@ from rest_framework import exceptions, generics, viewsets
 
 from .authentication import create_access_token, create_refresh_token, decode_access_token, JWTAuthentication, \
     decode_refresh_token
-from .models import User, UserToken, Reset, Gtotd, GtotdComment
+from .models import User, UserToken, Reset, Gtotd, GtotdComment, Profile
 from .serializers import UserSerializer, GtotdSerializer, GtotdCommentSerializer, GtotdGetterCommentSerializer, \
-    GtotdGetterSerializer
+    GtotdGetterSerializer, ProfileSerializer
 from django.db.models import Q
 
 
@@ -184,9 +184,35 @@ class TwoFactorAPIView(APIView):
 
 class UserAPIView(APIView):
     authentication_classes = [JWTAuthentication]
-
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
+
+class ProfileAPIView(APIView):
+    model = Profile
+    serializer_class = ProfileSerializer
+    def post(self, request):
+        data = request.data['image']
+        user_id = request.data['user_id']
+        profile = Profile.objects.create(image=data, user_id=user_id)
+        profile.save()
+        return Response('created')
+
+    def get(self, id):
+        queryset = Profile.objects.all()
+        print(queryset, id)
+        profile = self.request.query_params.get('id', None)
+        results = []
+        if profile is not None:
+            p = queryset.filter(user_id=profile)
+            for i in p:
+
+                serializer = ProfileSerializer(i)
+                results.append(serializer.data)
+
+            return Response(results)
+
+        raise exceptions.APIException('Profile not found')
 
 
 class SearchGtotdAPIView(APIView):

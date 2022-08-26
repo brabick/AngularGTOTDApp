@@ -1,6 +1,6 @@
 from rest_framework.fields import ReadOnlyField
 from rest_framework.serializers import ModelSerializer
-from .models import User, Gtotd, GtotdComment
+from .models import User, Gtotd, GtotdComment, Profile
 
 
 class UserSerializer(ModelSerializer):
@@ -24,6 +24,12 @@ class UserSerializer(ModelSerializer):
         # Return without the password
         return instance
 
+
+class ProfileSerializer(ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'user_id', 'image']
 
 class GtotdSerializer(ModelSerializer):
 

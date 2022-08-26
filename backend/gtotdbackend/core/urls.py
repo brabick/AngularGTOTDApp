@@ -1,9 +1,10 @@
 from django.urls import path, include, re_path
 from .views import RegisterAPIView, LoginAPIView, UserAPIView, RefreshAPIView, LogoutAPIView, \
     ForgotAPIView, ResetAPIView, TwoFactorAPIView, GtotdApiView, GetGtotdCommentApiView, MultipleGtotdAPIView, \
-    SearchGtotdAPIView
+    SearchGtotdAPIView, ProfileAPIView
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -23,8 +24,8 @@ urlpatterns = [
     # you need a base url as well
     path('searchgtotd', SearchGtotdAPIView.as_view()),
     path('searchgtotd/<str:u>/', SearchGtotdAPIView.as_view()),
+    path('profile', ProfileAPIView.as_view()),
+    path('profile/<str:id>/', ProfileAPIView.as_view()),
     path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
-]
 
-if settings.DEBUG:
-  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
