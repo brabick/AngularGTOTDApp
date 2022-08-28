@@ -14,6 +14,9 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def __str__(self):
+        return self.first_name
+
 
 class Profile(models.Model):
     user_id = models.IntegerField()

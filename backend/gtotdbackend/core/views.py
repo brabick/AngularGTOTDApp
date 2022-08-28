@@ -189,8 +189,8 @@ class UserAPIView(APIView):
 
 
 class ProfileAPIView(APIView):
-    model = Profile
-    serializer_class = ProfileSerializer
+
+
     def post(self, request):
         data = request.data['image']
         user_id = request.data['user_id']
@@ -200,17 +200,33 @@ class ProfileAPIView(APIView):
 
     def get(self, id):
         queryset = Profile.objects.all()
+        user_queryset = User.objects.all()
         print(queryset, id)
         profile = self.request.query_params.get('id', None)
         results = []
+        user_info = {
+            'user_id': '',
+            'username': '',
+            'image': ''
+        }
+
+
         if profile is not None:
-            p = queryset.filter(user_id=profile)
-            for i in p:
+            p = queryset.filter(user_id=profile).first()
+            u = user_queryset.filter(id=profile).first()
+            print(u)
+            profile_serializer = ProfileSerializer(p)
 
-                serializer = ProfileSerializer(i)
-                results.append(serializer.data)
 
-            return Response(results)
+
+            print(profile_serializer.data)
+            user_info = {
+                'user_id': profile,
+                'username': str(u),
+                'image': profile_serializer.data['image']
+            }
+
+            return Response(user_info)
 
         raise exceptions.APIException('Profile not found')
 

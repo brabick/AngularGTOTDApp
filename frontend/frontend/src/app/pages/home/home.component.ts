@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {GtotdService} from "../../services/gtotd.service";
+import {ProfileService} from "../../services/profile.service";
 
 interface Gtotd {
   id: Number;
+  image: string;
   title: string;
   body: string;
   date_created: string;
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private gtotdService: GtotdService,
+    private profileService: ProfileService,
   ) {
 
   }
@@ -48,7 +51,14 @@ export class HomeComponent implements OnInit {
     this.gtotdService.allGtotds().subscribe({
       next: (res:any) => {
         for(let i = 0; i < res.length; i++) {
-          this.gtotds.push(res[i])
+          let gtotd = res[i];
+          this.profileService.profiles(gtotd['user']).subscribe({
+            next: (profileRes:any) => {
+              gtotd['image'] = profileRes[0]['image']
+            }
+          })
+          this.gtotds.push(gtotd)
+          console.log(this.gtotds)
         }
         this.gtotds = res;
     }
