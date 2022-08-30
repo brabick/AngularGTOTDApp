@@ -109,6 +109,12 @@ class RegisterAPIView(APIView):
 
         serializer.save()
 
+        print(serializer)
+        profile = Profile.objects.create(image='/profile_pics/default.jpg', user_id=serializer.data['id'], )
+        profile.save()
+
+        profile_serializer = ProfileSerializer(profile)
+        print(profile_serializer.data)
         return Response(serializer.data)
 
 
@@ -215,6 +221,7 @@ class ProfileAPIView(APIView):
             u = user_queryset.filter(id=profile).first()
             print(u)
             profile_serializer = ProfileSerializer(p)
+
             user_serializer = UserSerializer(u)
             print(user_serializer.data)
             print(profile_serializer.data)
@@ -225,6 +232,9 @@ class ProfileAPIView(APIView):
                 'image': profile_serializer.data['image'],
                 'email': user_serializer.data['email']
             }
+
+            if user_info['image'] is None:
+                user_info['image'] = '/media/profile_pics/default.jpg'
 
             return Response(user_info)
 

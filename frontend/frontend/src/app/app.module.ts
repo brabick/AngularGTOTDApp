@@ -17,6 +17,7 @@ import { AuthenticatorComponent } from './pages/login/authenticator/authenticato
 import { GtotdComponent } from './pages/gtotd/gtotd.component';
 import { GtotdsComponent } from './pages/gtotd/gtotds/gtotds.component';
 import {DatePipe} from "@angular/common";
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {DatePipe} from "@angular/common";
     AuthenticatorComponent,
     GtotdComponent,
     GtotdsComponent,
+    ProfileComponent,
 
   ],
   imports: [

@@ -40,6 +40,7 @@ export class NavComponent implements OnInit {
   submit(): void {
     this.gtotdService.searchGtotd(this.form.getRawValue().search).subscribe({
       next: (res: any) => {
+        // I gotta implement this eventually
         /*for(let i = 0; i < res.length; i++) {
           this.comments.push(res[i])
         }
