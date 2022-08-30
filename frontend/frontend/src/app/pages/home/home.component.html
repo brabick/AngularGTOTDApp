@@ -4,11 +4,13 @@
 
 
 <div class="container d-flex p-2">
-  <img src='' alt="image">
+
   <ul class="gtotds">
     <li *ngFor="let gtotd of gtotds">
+
       <div class="card mb-3" style="width: 18rem;">
         <div class="card-body">
+          <img src='{{gtotd.image}}' class="profilePic" alt="image">
           <h5 class="card-title">What Happened?</h5>
           <h3>{{gtotd.title}}</h3>
           <hr />

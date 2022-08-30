@@ -10,6 +10,6 @@ export class ProfileService {
   constructor(private http:HttpClient) { }
 
   profiles(body: any) {
-    return this.http.get(`${environment.media}profile/?id=${body}`);
+    return this.http.get(`${environment.api}/profile?id=${body}`);
   }
 }

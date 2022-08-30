@@ -217,8 +217,6 @@ class ProfileAPIView(APIView):
             print(u)
             profile_serializer = ProfileSerializer(p)
 
-
-
             print(profile_serializer.data)
             user_info = {
                 'user_id': profile,

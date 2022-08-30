@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {GtotdService} from "../../services/gtotd.service";
 import {ProfileService} from "../../services/profile.service";
+import {environment} from "../../../environments/environment";
 
 interface Gtotd {
   id: Number;
@@ -52,9 +53,12 @@ export class HomeComponent implements OnInit {
       next: (res:any) => {
         for(let i = 0; i < res.length; i++) {
           let gtotd = res[i];
+          console.log(gtotd);
           this.profileService.profiles(gtotd['user']).subscribe({
             next: (profileRes:any) => {
-              gtotd['image'] = profileRes[0]['image']
+              gtotd['image'] = environment.media + profileRes['image'];
+              gtotd['user'] = profileRes['username'];
+              console.log(gtotd);
             }
           })
           this.gtotds.push(gtotd)

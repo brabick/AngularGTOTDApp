@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: 'http://localhost:8000/api',
-  media: 'http://localhost:8000/media/profile_pics/'
+  media: 'http://localhost:8000'
 };
 
 /*
