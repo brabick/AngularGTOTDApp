@@ -210,18 +210,20 @@ class ProfileAPIView(APIView):
             'image': ''
         }
 
-
         if profile is not None:
             p = queryset.filter(user_id=profile).first()
             u = user_queryset.filter(id=profile).first()
             print(u)
             profile_serializer = ProfileSerializer(p)
-
+            user_serializer = UserSerializer(u)
+            print(user_serializer.data)
             print(profile_serializer.data)
             user_info = {
                 'user_id': profile,
-                'username': str(u),
-                'image': profile_serializer.data['image']
+                'username': user_serializer.data['first_name'],
+                'last_name': user_serializer.data['last_name'],
+                'image': profile_serializer.data['image'],
+                'email': user_serializer.data['email']
             }
 
             return Response(user_info)

@@ -6,7 +6,7 @@ from .models import User, Gtotd, GtotdComment, Profile
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'password', 'image']
+        fields = ['id', 'first_name', 'last_name', 'email', 'password']
         extra_kwargs = {
             'password':
                 {'write_only': True}
@@ -60,3 +60,4 @@ class GtotdGetterCommentSerializer(ModelSerializer):
     class Meta:
         model = GtotdComment
         fields = ['gtotd', 'body', 'date_created', 'user']
+
