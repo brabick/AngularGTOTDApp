@@ -196,7 +196,6 @@ class UserAPIView(APIView):
 
 class ProfileAPIView(APIView):
 
-
     def post(self, request):
         data = request.data['image']
         user_id = request.data['user_id']
@@ -209,17 +208,11 @@ class ProfileAPIView(APIView):
         user_queryset = User.objects.all()
         print(queryset, id)
         profile = self.request.query_params.get('id', None)
-        results = []
-        user_info = {
-            'user_id': '',
-            'username': '',
-            'image': ''
-        }
-
+        user = self.request.query_params.get('u', None)
+        print(user)
         if profile is not None:
             p = queryset.filter(user_id=profile).first()
             u = user_queryset.filter(id=profile).first()
-            print(u)
             profile_serializer = ProfileSerializer(p)
 
             user_serializer = UserSerializer(u)
@@ -236,7 +229,24 @@ class ProfileAPIView(APIView):
             if user_info['image'] is None:
                 user_info['image'] = '/media/profile_pics/default.jpg'
 
-            return Response(user_info)
+            if user is None:
+
+                return Response(user_info)
+
+            else:
+                results = []
+
+                gtotds = Gtotd.objects.filter(user_id=profile)
+
+                for i in gtotds:
+                    results.append(GtotdSerializer(i).data)
+
+                response = {
+                    'user_information': user_info,
+                    'gtotds': results
+                }
+
+                return Response(response)
 
         raise exceptions.APIException('Profile not found')
 

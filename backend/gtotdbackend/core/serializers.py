@@ -48,6 +48,8 @@ class GtotdGetterSerializer(ModelSerializer):
 
 class GtotdCommentSerializer(ModelSerializer):
 
+    user = ReadOnlyField(source='user.first_name', read_only=True)
+
     class Meta:
         model = GtotdComment
         fields = ['gtotd', 'body', 'date_created', 'user']
@@ -55,7 +57,7 @@ class GtotdCommentSerializer(ModelSerializer):
 
 class GtotdGetterCommentSerializer(ModelSerializer):
 
-    # user = ReadOnlyField(source='user.first_name', read_only=True)
+    user = ReadOnlyField(source='user.first_name', read_only=True)
 
     class Meta:
         model = GtotdComment

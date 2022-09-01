@@ -25,7 +25,8 @@ urlpatterns = [
     path('searchgtotd', SearchGtotdAPIView.as_view()),
     path('searchgtotd/<str:u>/', SearchGtotdAPIView.as_view()),
     path('profile', ProfileAPIView.as_view()),
-    path('profile/<str:id>/', ProfileAPIView.as_view()),
+    path('profile/<str:id>', ProfileAPIView.as_view()),
+    path('profile/<str:id>/<str:u>', ProfileAPIView.as_view()),
     path('gtotds', MultipleGtotdAPIView.as_view({'get': 'list'})),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

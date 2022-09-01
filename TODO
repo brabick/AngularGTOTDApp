@@ -3,3 +3,7 @@
 3. Add styling
 4. Add sorting (maybe base sorting as well)
 5. I added searching, which is cool
+6. So, I made changes to the profile view. Now, if the request includes
+   another paramter, the response will include all of that user's gtotds
+   next thing is to update the comment gtotd page and then work on the profile
+   page.
