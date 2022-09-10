@@ -40,13 +40,32 @@ class GtotdApiView(APIView):
 
     def get(self, request):
         queryset = Gtotd.objects.all()
-
+        comments = GtotdComment.objects.all()
+        profile = Profile.objects.all()
         id = self.request.query_params.get('id', None)
 
         if id is not None:
             gtotd = queryset.get(id=id)
-            serializer = GtotdGetterSerializer(gtotd)
-            return Response(serializer.data)
+            serializer = GtotdSerializer(gtotd)
+            print(serializer.data['user'])
+            pro = profile.filter(user_id=serializer.data['user']).first()
+            print(pro)
+            profile_serializer = ProfileSerializer(pro)
+            print(profile_serializer.data)
+
+            gtotd_comments = comments.filter(gtotd=id)
+            comments = []
+            for c in gtotd_comments:
+                comment_serializer = GtotdCommentSerializer(c)
+                comments.append(comment_serializer.data)
+
+            results = {
+                'image': profile_serializer.data['image'],
+                'gtotd': serializer.data,
+                'comments': comments
+            }
+
+            return Response(results)
 
         raise exceptions.APIException('GTOTD not found')
 
@@ -67,6 +86,7 @@ class GetGtotdCommentApiView(APIView):
 
         return Response(serializer.data)
 
+    # This will only be used for grabbing single comments going forward
     def get(self, gtotd):
         queryset = GtotdComment.objects.all()
         print(queryset, gtotd)
@@ -225,14 +245,20 @@ class ProfileAPIView(APIView):
                 'image': profile_serializer.data['image'],
                 'email': user_serializer.data['email']
             }
-
+            # If there isn't an associated profile picture, use the default
             if user_info['image'] is None:
                 user_info['image'] = '/media/profile_pics/default.jpg'
 
+            """ 
+            If there isn't a user in the request params (literally anything)
+            then we know that we are supposed to also return the gtotds from that
+            person. The param was going to be a boolean but it doesn't really
+            matter
+            """
             if user is None:
 
                 return Response(user_info)
-
+            # Otherwise, grab all of the gtotds from the requested user and return those
             else:
                 results = []
 

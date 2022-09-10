@@ -22,6 +22,7 @@ class Profile(models.Model):
     user_id = models.IntegerField()
     image = models.ImageField(default='default.jpg', upload_to='profile_pics', null=True, blank=True)
 
+
 class UserToken(models.Model):
     user_id = models.IntegerField()
     token = models.CharField(max_length=255)

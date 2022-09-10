@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {GtotdService} from "../../../services/gtotd.service";
 import {AuthService} from "../../../services/auth.service";
 import { DatePipe } from '@angular/common';
+import {environment} from "../../../../environments/environment";
 
 // The naming sucks, this is the component for the single Gtotd
 interface Gtotd {
@@ -31,7 +32,7 @@ interface Comment {
 export class GtotdsComponent implements OnInit {
   form!: FormGroup;
   date = new Date();
-
+  image = '';
   gtotds: Gtotd[] = [];
   comments: Comment[] = [];
   response = false;
@@ -100,10 +101,18 @@ export class GtotdsComponent implements OnInit {
   getGtotd(): void {
     this.gtotdService.singleGtotd(this.route.snapshot.params['id']).subscribe({
       next: (res: any) => {
-        this.gtotds.push(res);
+        this.gtotds.push(res['gtotd']);
+        this.image = environment.media + res['image'];
         this.response = true;
         console.log(this.gtotds);
-        this.getComments()
+        if (res['comments'].length > 0) {
+          this.comment = true;
+          for (let i = 0; i < res['comments'].length; i++) {
+            console.log(res['comments'][i])
+            this.comments.push(res['comments'][i])
+          }
+        }
+        console.log(this.comments)
         return res;
 
       },
