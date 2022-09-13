@@ -54,6 +54,8 @@ class GtotdApiView(APIView):
             print(profile_serializer.data)
 
             gtotd_comments = comments.filter(gtotd=id)
+            gtotd_result = serializer.data
+            gtotd_result['user'] = profile_serializer.data['user_id']
             comments = []
             for c in gtotd_comments:
                 comment_serializer = GtotdCommentSerializer(c)

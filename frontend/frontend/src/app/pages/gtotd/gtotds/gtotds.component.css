@@ -6,3 +6,24 @@
   width: 75px;
   height: 75px;
 }
+
+.gtotds {
+  list-style: none;
+}
+
+.gtotd {
+  width: 55rem;
+}
+
+.gtotd_header {
+  display: flex;
+}
+
+.gtotd_header_item {
+  margin: 1rem;
+}
+.profilePic {
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
