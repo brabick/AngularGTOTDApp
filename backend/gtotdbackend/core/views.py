@@ -47,11 +47,11 @@ class GtotdApiView(APIView):
         if id is not None:
             gtotd = queryset.get(id=id)
             serializer = GtotdSerializer(gtotd)
-            print(serializer.data['user'])
+
             pro = profile.filter(user_id=serializer.data['user']).first()
-            print(pro)
+
             profile_serializer = ProfileSerializer(pro)
-            print(profile_serializer.data)
+
 
             gtotd_comments = comments.filter(gtotd=id)
             gtotd_result = serializer.data
@@ -91,7 +91,7 @@ class GetGtotdCommentApiView(APIView):
     # This will only be used for grabbing single comments going forward
     def get(self, gtotd):
         queryset = GtotdComment.objects.all()
-        print(queryset, gtotd)
+
         gtotd = self.request.query_params.get('id', None)
 
         results = []
@@ -106,16 +106,25 @@ class GetGtotdCommentApiView(APIView):
         raise exceptions.APIException('GTOTD not found')
 
 
-class MultipleGtotdAPIView(viewsets.ModelViewSet):
-    model = Gtotd
-    serializer_class = GtotdGetterSerializer
-
-    def get_queryset(self):
-        return Gtotd.objects.all()
+class MultipleGtotdAPIView(APIView):
 
     def get(self, request):
-        queryset = self.get_queryset()
-        return Response(queryset)
+        queryset = Gtotd.objects.all()
+        print("I'm here now")
+        results = []
+        for q in queryset:
+
+            serializer = GtotdSerializer(q)
+            profile = Profile.objects.filter(user_id=serializer.data['user']).first()
+            profile_serializer = ProfileSerializer(profile)
+            user = User.objects.filter(id=serializer.data['user']).first()
+            user_serializer = UserSerializer(user)
+
+            r = serializer.data
+            r['image'] = profile_serializer.data['image']
+            r['user'] = user_serializer.data['first_name']
+            results.append(r)
+        return Response(results)
 
 
 class RegisterAPIView(APIView):
@@ -130,13 +139,10 @@ class RegisterAPIView(APIView):
         serializer.is_valid(raise_exception=True)
 
         serializer.save()
-
-        print(serializer)
         profile = Profile.objects.create(image='/profile_pics/default.jpg', user_id=serializer.data['id'], )
         profile.save()
 
         profile_serializer = ProfileSerializer(profile)
-        print(profile_serializer.data)
         return Response(serializer.data)
 
 
@@ -212,6 +218,7 @@ class TwoFactorAPIView(APIView):
 
 class UserAPIView(APIView):
     authentication_classes = [JWTAuthentication]
+
     def get(self, request):
         return Response(UserSerializer(request.user).data)
 
@@ -228,18 +235,14 @@ class ProfileAPIView(APIView):
     def get(self, id):
         queryset = Profile.objects.all()
         user_queryset = User.objects.all()
-        print(queryset, id)
+
         profile = self.request.query_params.get('id', None)
         user = self.request.query_params.get('u', None)
-        print(user)
         if profile is not None:
             p = queryset.filter(user_id=profile).first()
             u = user_queryset.filter(id=profile).first()
             profile_serializer = ProfileSerializer(p)
-
             user_serializer = UserSerializer(u)
-            print(user_serializer.data)
-            print(profile_serializer.data)
             user_info = {
                 'user_id': profile,
                 'username': user_serializer.data['first_name'],
@@ -326,7 +329,7 @@ class RefreshAPIView(APIView):
     def post(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
         id = decode_refresh_token(refresh_token)
-        print("id", id, refresh_token, datetime.datetime.now(tz=datetime.timezone.utc))
+
         if not UserToken.objects.filter(
                 user_id=id,
                 token=refresh_token,

@@ -54,13 +54,7 @@ export class HomeComponent implements OnInit {
         for(let i = 0; i < res.length; i++) {
           let gtotd = res[i];
           console.log(gtotd);
-          this.profileService.profiles(gtotd['user']).subscribe({
-            next: (profileRes:any) => {
-              gtotd['image'] = environment.media + profileRes['image'];
-              gtotd['user'] = profileRes['username'];
-              console.log(gtotd);
-            }
-          })
+          gtotd['image'] = environment.media + gtotd['image'];
           this.gtotds.push(gtotd)
           console.log(this.gtotds)
         }
