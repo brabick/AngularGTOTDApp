@@ -27,7 +27,7 @@
   border-top-right-radius: 0;
 }
 
-.gtotds {
+.gtotds, .comments  {
   list-style: none;
 }
 
@@ -40,10 +40,17 @@
 }
 
 .gtotd_header_item {
-  margin: 1rem;
+  margin: 0 1rem 0 0;
+
 }
 .profilePic {
   border-radius: 50%;
   width: 75px;
   height: 75px;
+  display: block;
+  margin: 0;
+}
+
+.card-body {
+  padding: .2rem;
 }

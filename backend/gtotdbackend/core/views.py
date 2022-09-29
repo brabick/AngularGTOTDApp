@@ -211,7 +211,8 @@ class TwoFactorAPIView(APIView):
         response = Response()
         response.set_cookie(key='refresh_token', value=refresh_token, httponly=True)
         response.data = {
-            'token': access_token
+            'token': access_token,
+            'user_id': user.id
         }
         return response
 

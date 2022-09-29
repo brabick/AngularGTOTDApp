@@ -12,4 +12,7 @@ export class ProfileService {
   profiles(body: any) {
     return this.http.get(`${environment.api}/profile?id=${body}`);
   }
+  individual_profile(id: any, user: any) {
+    return this.http.get(`${environment.api}/profile?id=${id}&u=${user}`);
+  }
 }

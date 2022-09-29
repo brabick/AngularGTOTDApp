@@ -27,6 +27,7 @@ export class AuthenticatorComponent implements OnInit {
       }
     );
   }
+
   submit(){
     const formData = this.form.getRawValue();
     const data = this.loginData;
@@ -42,6 +43,7 @@ export class AuthenticatorComponent implements OnInit {
         this.authService.accessToken = res.token;
         AuthService.authEmitter.emit(true);
         this.router.navigate(['/']);
+        sessionStorage.setItem('userId', res['user_id']);
       }
     );
   }

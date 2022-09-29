@@ -11,6 +11,7 @@ import {GtotdService} from "../../services/gtotd.service";
 export class NavComponent implements OnInit {
   authenticated = false;
   form!: FormGroup;
+  user_id = sessionStorage.getItem('userId');
 
   constructor(
     private authService: AuthService,
@@ -48,6 +49,7 @@ export class NavComponent implements OnInit {
         console.log(this.comments);
         return res;*/
         console.log(res);
+        console.log(sessionStorage.getItem('userId'));
       },
       error: (err: any) => {
         console.log("error")

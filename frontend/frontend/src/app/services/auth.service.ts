@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 })
 export class AuthService {
   static authEmitter = new EventEmitter<boolean>();
+  userId = '';
 
 
   accessToken = '';
