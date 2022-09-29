@@ -262,7 +262,6 @@ class ProfileAPIView(APIView):
             matter
             """
             if user is None:
-
                 return Response(user_info)
             # Otherwise, grab all of the gtotds from the requested user and return those
             else:

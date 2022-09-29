@@ -1,1 +1,25 @@
-<p>profile works!</p>
+<img src='{{image}}' class="profilePic profile_header_item" alt="image">
+<h2>{{username}}</h2>
+<h3>Your GTOTDs</h3>
+<div class="container d-flex p-2">
+  <ul class="gtotds">
+    <li *ngFor="let gtotd of gtotds">
+      <div class="card mb-3 gtotd">
+        <div class="card-body">
+          <div class="gtotd_header">
+            <h3 class="gtotd_header_item">{{gtotd.title}}</h3>
+          </div>
+          <div class="gtotd_header">
+
+            <p class="gtotd_header_item">By: {{gtotd.user}}</p>
+            <p class="gtotd_header_item">On: {{gtotd.date_created}}</p>
+          </div>
+          <hr/>
+          <p>{{gtotd.body}}</p>
+        </div>
+        <br/>
+      </div>
+
+    </li>
+  </ul>
+</div>

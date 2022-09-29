@@ -4,6 +4,16 @@ import {AuthService} from "../../services/auth.service";
 import {GtotdService} from "../../services/gtotd.service";
 import {FormBuilder} from "@angular/forms";
 import {ProfileService} from "../../services/profile.service";
+import {environment} from "../../../environments/environment";
+
+
+interface Gtotd {
+  id: Number;
+  title: string;
+  body: string;
+  date_created: string;
+  user: Number;
+}
 
 @Component({
   selector: 'app-profile',
@@ -23,9 +33,12 @@ export class ProfileComponent implements OnInit {
   user_id = sessionStorage.getItem('userId');
   show_message = false;
   message = '';
-
+  gtotds: Gtotd[] = [];
+  image = '';
+  username = '';
 
   ngOnInit(): void {
+    this.getId();
   }
 
 
@@ -35,7 +48,18 @@ export class ProfileComponent implements OnInit {
 
           this.user_id = res.id;
 
-          this.profileService.individual_profile(this.user_id, 1).subscribe()
+          this.profileService.individual_profile(this.user_id, 1).subscribe({
+            next: (res:any) => {
+              console.log(res);
+              this.image = environment.media + res.user_information.image;
+              console.log(res['gtotds']);
+              this.username = res.user_information.username;
+              for (let i =0; i < res.gtotds.length; i++) {
+                this.gtotds.push(res.gtotds[i])
+              }
+            }
+          });
+          console.log("------------------")
           console.log(res);
           return res;
         },
