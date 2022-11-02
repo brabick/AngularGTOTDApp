@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: 'reset/:token', component: ResetComponent},
   {path: 'gtotd', component: GtotdComponent},
   {path: 'gtotd/:id', component: GtotdsComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'profile/:id', component: ProfileComponent},
 ];
 

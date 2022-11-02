@@ -18,6 +18,8 @@ import { GtotdComponent } from './pages/gtotd/gtotd.component';
 import { GtotdsComponent } from './pages/gtotd/gtotds/gtotds.component';
 import {DatePipe} from "@angular/common";
 import { ProfileComponent } from './components/profile/profile.component';
+import { MatSliderModule } from '@angular/material/slider';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,12 @@ import { ProfileComponent } from './components/profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSliderModule,
+    BrowserAnimationsModule,
+  ],
+  exports: [
+    MatSliderModule,
   ],
   providers: [
     DatePipe,

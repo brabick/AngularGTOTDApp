@@ -1,7 +1,10 @@
-<img src='{{image}}' class="profilePic profile_header_item" alt="image">
-<h2>{{username}}</h2>
-<h3>Your GTOTDs</h3>
-<div class="container d-flex p-2">
+<div class="gtotd_profile">
+  <img src='{{image}}' class="profilePic profile_header_item" alt="image">
+  <h2>{{username}}</h2>
+</div>
+
+<div class="container p-2">
+  <h3>Your GTOTDs</h3>
   <ul class="gtotds">
     <li *ngFor="let gtotd of gtotds">
       <div class="card mb-3 gtotd">
