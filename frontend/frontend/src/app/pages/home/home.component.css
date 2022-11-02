@@ -1,18 +1,26 @@
 .gtotds {
   list-style: none;
+  width: 35rem;
+  display:flex;
 }
 
 .gtotd {
-  width: 55rem;
+
+}
+
+.grid_list {
+  margin: auto;
+  width: 80%;
 }
 
 .gtotd_header {
-  display: flex;
+
 }
 
 .gtotd_header_item {
   margin: 1rem;
 }
+
 .profilePic {
   border-radius: 50%;
   width: 75px;

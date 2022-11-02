@@ -20,6 +20,8 @@ import {DatePipe} from "@angular/common";
 import { ProfileComponent } from './components/profile/profile.component';
 import { MatSliderModule } from '@angular/material/slider';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatGridListModule} from "@angular/material/grid-list";
+
 
 @NgModule({
   declarations: [
@@ -35,7 +37,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     GtotdComponent,
     GtotdsComponent,
     ProfileComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -44,6 +45,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule,
     MatSliderModule,
     BrowserAnimationsModule,
+    MatGridListModule,
   ],
   exports: [
     MatSliderModule,
