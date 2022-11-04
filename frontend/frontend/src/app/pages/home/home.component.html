@@ -33,30 +33,28 @@
 </div>
 -->
 
-<mat-grid-list class="grid_list" cols="2" rowHeight="2:1">
+<mat-grid-list class="grid_list" cols="3" rowHeight="2:1">
   <ul class="gtotds">
     <li *ngFor="let gtotd of gtotds">
       <mat-grid-tile>
-      <div class="card mb-3 gtotd">
-        <div class="card-body">
+      <div class="gtotd">
           <div class="gtotd_header">
             <img src='{{gtotd.image}}' class="profilePic gtotd_header_item" alt="image">
             <h3 class="gtotd_header_item">{{gtotd.title}}</h3>
 
           </div>
+        <div>
+          <p class="gtotd_header_item">{{gtotd.body}}</p>
+        </div>
           <div class="gtotd_header">
             <p class="gtotd_header_item">By: {{gtotd.user}}</p>
             <p class="gtotd_header_item">On: {{gtotd.date_created}}</p>
+            <a routerLink="/gtotd/{{gtotd.id}}" class="gtotd_header_item">Comment</a>
+
           </div>
-          <hr />
-
-          <p>{{gtotd.body}}</p>
-
-          <a routerLink="/gtotd/{{gtotd.id}}" class="btn btn-primary">Comment</a>
         </div>
         <br />
-      </div>
-  </mat-grid-tile>
+      </mat-grid-tile>
     </li>
   </ul>
 </mat-grid-list>
