@@ -21,6 +21,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MatSliderModule } from '@angular/material/slider';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatGridListModule} from "@angular/material/grid-list";
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
     GtotdComponent,
     GtotdsComponent,
     ProfileComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import {ResetComponent} from "./pages/reset/reset.component";
 import {GtotdComponent} from "./pages/gtotd/gtotd.component";
 import {GtotdsComponent} from "./pages/gtotd/gtotds/gtotds.component";
 import {ProfileComponent} from "./components/profile/profile.component";
+import {SearchComponent} from "./components/search/search.component";
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'gtotd/:id', component: GtotdsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'profile/:id', component: ProfileComponent},
+  {path: 'search/q', component: SearchComponent}
 ];
 
 @NgModule({

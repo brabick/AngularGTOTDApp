@@ -284,22 +284,38 @@ class ProfileAPIView(APIView):
 
 class SearchGtotdAPIView(APIView):
     model = Gtotd
-    serializer_class = GtotdGetterSerializer
 
     def get(self, request):
-        queryset = Gtotd.objects.all()
+        gtotd_queryset = Gtotd.objects.all()
+        user_queryset = User.objects.all()
 
         user = self.request.query_params.get('u', None)
-        results = []
+        gtotds = []
+        users = []
+
         if user is not None:
-            body_search = queryset.filter(
+            body_search = gtotd_queryset.filter(
                 Q(body__icontains=user) | Q(title__icontains=user) | Q(user__first_name__icontains=user))
+
+            user_search = user_queryset.filter(
+                Q(first_name__icontains=user) | Q(last_name__icontains=user)
+            )
             print(body_search)
             if body_search is not None:
                 for i in body_search:
                     print(i)
                     serializer = GtotdGetterSerializer(i)
-                    results.append(serializer.data)
+                    gtotds.append(serializer.data)
+
+            if user_search is not None:
+                for i in user_search:
+                    print(i)
+                    serializer = UserSerializer(i)
+                    users.append(serializer.data)
+            final = {
+                'gtotds': gtotds,
+                'users': users
+            }
 
             """
                     if user is not None:
@@ -320,7 +336,7 @@ class SearchGtotdAPIView(APIView):
                         serializer = UserSerializer(i)
                         results.append(serializer.data)"""
 
-            return Response(results)
+            return Response(final)
 
         raise exceptions.APIException('No users found')
 
