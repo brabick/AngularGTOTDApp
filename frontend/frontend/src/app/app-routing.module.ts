@@ -21,7 +21,8 @@ const routes: Routes = [
   {path: 'gtotd/:id', component: GtotdsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'profile/:id', component: ProfileComponent},
-  {path: 'search/q', component: SearchComponent}
+  {path: 'search/:q', component: SearchComponent},
+  {path: 'search', component: SearchComponent},
 ];
 
 @NgModule({

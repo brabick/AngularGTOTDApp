@@ -5,8 +5,10 @@
         <li><a routerLink="/" class="nav-link px-2 text-white">Home</a></li>
 
           <form [formGroup]="form" (submit)="submit()" class="d-flex">
-            <li><input formControlName="search" type="text" class="form-control" placeholder="Search"></li>
-            <li><button class="btn btn-warning" type="submit">Search</button></li>
+            <li><input formControlName="search" type="text" class="form-control" [(ngModel)]="search" placeholder="Search"></li>
+            <li>
+              <a routerLink="/search/{{search}}" class="btn btn-warning" (click)="searchButton()">Search</a>
+            </li>
           </form>
 
       </ul>

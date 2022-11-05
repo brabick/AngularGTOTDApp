@@ -12,6 +12,7 @@ export class NavComponent implements OnInit {
   authenticated = false;
   form!: FormGroup;
   user_id = sessionStorage.getItem('userId');
+  search: string = '';
 
   constructor(
     private authService: AuthService,
@@ -57,4 +58,10 @@ export class NavComponent implements OnInit {
       }
     })
   }
+
+  searchButton() {
+    console.log(this.search);
+
+  }
+
 }
