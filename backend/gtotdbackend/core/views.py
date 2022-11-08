@@ -288,6 +288,7 @@ class SearchGtotdAPIView(APIView):
     def get(self, request):
         gtotd_queryset = Gtotd.objects.all()
         user_queryset = User.objects.all()
+        profile_queryset = Profile.objects.all()
 
         user = self.request.query_params.get('u', None)
         gtotds = []
@@ -305,13 +306,33 @@ class SearchGtotdAPIView(APIView):
                 for i in body_search:
                     print(i)
                     serializer = GtotdGetterSerializer(i)
-                    gtotds.append(serializer.data)
+
+                    u = user_queryset.filter(id=serializer.data['user']).first()
+                    p = profile_queryset.filter(user_id=serializer.data['user']).first()
+                    profile_serializer = ProfileSerializer(p)
+                    user_serializer = UserSerializer(u)
+                    gtotd = {
+                        'id': serializer.data['user'],
+                        'title': serializer.data['title'],
+                        'body': serializer.data['body'],
+                        'date_created': serializer.data['date_created'],
+                        'user': user_serializer.data['first_name'],
+                        'image': profile_serializer.data['image']
+                    }
+                    gtotds.append(gtotd)
 
             if user_search is not None:
                 for i in user_search:
                     print(i)
                     serializer = UserSerializer(i)
-                    users.append(serializer.data)
+                    p = profile_queryset.filter(user_id=serializer.data['id']).first()
+                    profile_serializer = ProfileSerializer(p)
+                    user = {
+                        'first_name': serializer.data['first_name'],
+                        'last_name': serializer.data['last_name'],
+                        'image': profile_serializer.data['image']
+                    }
+                    users.append(user)
             final = {
                 'gtotds': gtotds,
                 'users': users

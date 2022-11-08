@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
         this.message = `Hello ${res.first_name}`;
         this.image = res.image;
         AuthService.authEmitter.emit(true);
-        console.log(res);
       },
       error: err => {
         this.message = 'You are not logged in';
@@ -53,10 +52,8 @@ export class HomeComponent implements OnInit {
       next: (res:any) => {
         for(let i = 0; i < res.length; i++) {
           let gtotd = res[i];
-          console.log(gtotd);
           gtotd['image'] = environment.media + gtotd['image'];
           this.gtotds.push(gtotd)
-          console.log(this.gtotds)
         }
         this.gtotds = res;
     }

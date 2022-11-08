@@ -22,6 +22,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { SearchComponent } from './components/search/search.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { SearchComponent } from './components/search/search.component';
     MatSliderModule,
     BrowserAnimationsModule,
     MatGridListModule,
+    MatTabsModule
   ],
   exports: [
     MatSliderModule,
