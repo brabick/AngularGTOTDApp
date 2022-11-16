@@ -1,5 +1,5 @@
 
-
+<h2>Results for: {{param}}</h2>
 <mat-tab-group>
   <mat-tab label="GTOTDS">
     <mat-grid-list class="grid_list" cols="3" rowHeight="2:1">
@@ -16,8 +16,8 @@
                 <p class="gtotd_header_item">{{gtotd.body}}</p>
               </div>
               <div class="gtotd_header">
-                <p class="gtotd_header_item">By: {{gtotd.user}}</p>
-                <p class="gtotd_header_item">On: {{gtotd.date_created}}</p>
+                <p class="gtotd_header_item">By: {{gtotd.user}} </p>
+                <p class="gtotd_header_item">On: {{gtotd.date_created}} </p>
                 <a routerLink="/gtotd/{{gtotd.id}}" class="gtotd_header_item">Comment</a>
 
               </div>
@@ -29,15 +29,17 @@
     </mat-grid-list>
   </mat-tab>
   <mat-tab label="Users">
+    <mat-grid-list class="grid_list" cols="3" rowHeight="4:1">
       <ul class="gtotds">
         <li *ngFor="let user of users">
-            <p>
+            <mat-grid-tile>
               <img src='{{user.image}}' class="profilePic gtotd_header_item" alt="image">
               {{user.first_name}}
               {{user.last_name}}
-            </p>
+            </mat-grid-tile>
             <br />
         </li>
       </ul>
+    </mat-grid-list>
   </mat-tab>
 </mat-tab-group>

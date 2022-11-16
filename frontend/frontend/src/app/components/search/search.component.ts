@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {GtotdService} from "../../services/gtotd.service";
 import {environment} from "../../../environments/environment";
@@ -32,16 +32,34 @@ export class SearchComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private gtotdService: GtotdService,
+    private router: Router,
   ) {
+    router.events.subscribe((val) => {
+     if (val instanceof NavigationStart == false) {
+       // This is pretty sketch, but it works. We check the route to see
+       // If stuff has changed, if so we check the param again and run getGtotds
+       this.param = window.location.href.slice(environment.media.length + 8)
+       this.getGtotds();
+     }
+    })
   }
 
   ngOnInit(): void {
+    this.getGtotds();
+  }
+
+  getGtotds(): void {
+
     this.gtotdService.searchGtotd(this.param).subscribe({
       next: (res: any) => {
-
+        while(this.gtotds.length > 0) {
+          this.gtotds.pop();
+        }
+        while(this.users.length > 0) {
+          this.users.pop();
+        }
         for(let i = 0; i < res.gtotds.length; i++) {
           let gtotd = res.gtotds[i];
-          console.log(gtotd);
           gtotd['image'] = environment.media + gtotd['image'];
           this.gtotds.push(gtotd)
         }
@@ -51,10 +69,9 @@ export class SearchComponent implements OnInit {
           user['image'] = environment.media + user['image'];
           this.users.push(user)
         }
-        }
+      }
 
-      },)
-
+    },)
   }
 
 }

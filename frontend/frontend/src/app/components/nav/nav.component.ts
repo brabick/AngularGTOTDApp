@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {GtotdService} from "../../services/gtotd.service";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-nav',
@@ -13,11 +15,13 @@ export class NavComponent implements OnInit {
   form!: FormGroup;
   user_id = sessionStorage.getItem('userId');
   search: string = '';
+  url: string = '';
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private gtotdService: GtotdService,
+    private router: Router,
   ) {
 
   }
@@ -40,15 +44,15 @@ export class NavComponent implements OnInit {
   }
 
   submit(): void {
-    this.gtotdService.searchGtotd(this.form.getRawValue().search).subscribe({
+    /*this.gtotdService.searchGtotd(this.form.getRawValue().search).subscribe({
       next: (res: any) => {
-        // I gotta implement this eventually
-        /*for(let i = 0; i < res.length; i++) {
+        I gotta implement this eventually
+        for(let i = 0; i < res.length; i++) {
           this.comments.push(res[i])
         }
         this.comment = true;
         console.log(this.comments);
-        return res;*/
+        return res;
         console.log(res);
         console.log(sessionStorage.getItem('userId'));
       },
@@ -56,12 +60,12 @@ export class NavComponent implements OnInit {
         console.log("error")
         return err;
       }
-    })
+    }) */
   }
 
   searchButton() {
     console.log(this.search);
-
+    this.url = this.router.url;
   }
 
 }
