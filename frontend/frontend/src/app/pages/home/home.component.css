@@ -14,15 +14,27 @@
 
 .grid_list {
   margin: auto;
-  width: 80%;
+  width: 70%;
 }
 
+.mat-list {
+  flex-grow: 1;
+  overflow: auto;
+}
+.mat-grid-tile {
+  flex-grow: 10;
+  overflow: auto;
+}
 .gtotd_header {
-
+  margin: 1rem;
 }
 
 .gtotd_header_item {
-  margin: 1rem;
+  margin: 0;
+}
+
+#comment {
+  font-family: "Segoe MDL2 Assets", sans-serif;
 }
 
 .mat-grid-tile:hover {
@@ -33,4 +45,8 @@
   border-radius: 50%;
   width: 75px;
   height: 75px;
+}
+
+.inner_list {
+  list-style: none;
 }

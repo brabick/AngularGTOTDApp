@@ -31,7 +31,7 @@
   </ul>
   </mat-grid-list>
 </div>
--->
+
 
 <mat-grid-list class="grid_list" cols="3" rowHeight="2:1">
   <ul class="gtotds">
@@ -40,17 +40,47 @@
       <div class="gtotd">
           <div class="gtotd_header">
             <img src='{{gtotd.image}}' class="profilePic gtotd_header_item" alt="image">
-            <h3 class="gtotd_header_item">{{gtotd.title}}</h3>
+            <h3 class="gtotd_header_item">{{gtotd.title}} | {{gtotd.user}}</h3>
+            <a routerLink="/gtotd/{{gtotd.id}}" class="gtotd_header_item far">&#xf4ad; <a id="comment">Comment</a></a>
 
           </div>
         <div>
           <p class="gtotd_header_item">{{gtotd.body}}</p>
         </div>
           <div class="gtotd_header">
-            <p class="gtotd_header_item">By: {{gtotd.user}}</p>
             <p class="gtotd_header_item">On: {{gtotd.date_created}}</p>
-            <a routerLink="/gtotd/{{gtotd.id}}" class="gtotd_header_item">Comment</a>
 
+          </div>
+        </div>
+        <br />
+      </mat-grid-tile>
+    </li>
+  </ul>
+</mat-grid-list>
+-->
+
+<mat-grid-list class="grid_list" cols="1" rowHeight="4:1">
+  <ul class="gtotds">
+    <li *ngFor="let gtotd of gtotds">
+      <mat-grid-tile>
+        <div class="gtotd">
+          <div class="gtotd_header">
+            <img src='{{gtotd.image}}' class="profilePic gtotd_header_item" alt="image">
+            <ul class="inner_list">
+              <li>
+                <p class="gtotd_header_item">{{gtotd.title}} | {{gtotd.user}}</p>
+              </li>
+              <li>
+                <a routerLink="/gtotd/{{gtotd.id}}" class="gtotd_header_item far">&#xf4ad; <a id="comment">Comment</a></a>
+              </li>
+              <li>
+                <p class="gtotd_header_item">On: {{gtotd.date_created}}</p>
+              </li>
+            </ul>
+
+          </div>
+          <div class="gtotd_header">
+            <p class="gtotd_header_item">{{gtotd.body}}</p>
           </div>
         </div>
         <br />

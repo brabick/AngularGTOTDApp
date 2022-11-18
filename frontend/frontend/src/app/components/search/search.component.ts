@@ -52,6 +52,7 @@ export class SearchComponent implements OnInit {
 
     this.gtotdService.searchGtotd(this.param).subscribe({
       next: (res: any) => {
+        // When it comes time to reload results, we gotta clear these lists
         while(this.gtotds.length > 0) {
           this.gtotds.pop();
         }
